@@ -68,9 +68,12 @@
     </div>
     <script>
         var WebApp = window.Telegram.WebApp;
-        Telegram.WebApp.getUser().then(user => {
-        WebApp.showAlert(`Добро пожаловать, @${user.username}.`);
-        });
+        if (WebApp.initData) {
+          const userData = WebApp.initData.user;
+          WebApp.showAlert(`Добро пожаловать, @${userData.username}.`);
+        } else {
+          WebApp.showAlert('Ошибка: не удалось получить информацию о пользователе.');
+        }
         
         window.Telegram.WebApp.init({
             id: 'YOUR_TELEGRAM_WEB_APP_ID',
