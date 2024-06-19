@@ -14,18 +14,17 @@
             height: 100vh;
             margin: 0;
             padding: 0;
-            background-color: #f5f5f5;
             font-family: 'Roboto', sans-serif;
         }
         h1 {
             font-size: 2rem;
             font-weight: 500;
-            color: #262626;
+            color: var(--tg-text-color);
             margin-bottom: 1rem;
         }
         p {
             font-size: 1.125rem;
-            color: #262626;
+            color: var(--tg-text-color);
             text-align: center;
             margin-bottom: 2rem;
         }
@@ -43,7 +42,7 @@
             width: 200px;
             height: 50px;
             border-radius: 25px;
-            background-color: #0088cc;
+            background-color: var(--tg-accent-color);
             color: #ffffff;
             font-size: 1rem;
             font-weight: 500;
@@ -53,7 +52,7 @@
             transition: background-color 0.2s ease;
         }
         .button:hover {
-            background-color: #0069b4;
+            background-color: var(--tg-accent-color-hover);
         }
     </style>
 </head>
@@ -65,49 +64,31 @@
         <a href="#" class="button">Написать сообщение</a>
     </div>
     <script>
-        import { useThemeParams } from '@vkruglikov/react-telegram-web-app';
-        var WebApp = window.Telegram.WebApp;
-        
-        // Initialize Web App
-        WebApp.initData = window.location.search;
+        // Initialize Telegram Web App
+        window.Telegram.WebApp.init({
+            // Your Telegram Web App ID
+            id: 'YOUR_TELEGRAM_WEB_APP_ID',
+            // Your Telegram Web App bot token
+            token: 'YOUR_TELEGRAM_WEB_APP_BOT_TOKEN',
+        });
 
-        const themeParams = useThemeParams();
+        // Get ThemeParams
+        const themeParams = window.Telegram.WebApp.themeParams;
 
-        if (themeParams.bg_color) {
-        document.body.style.background = themeParams.bg_color;
-        }
+        // Set CSS variables
+        document.body.style.setProperty('--tg-text-color', themeParams.text_color);
+        document.body.style.setProperty('--tg-accent-color', themeParams.accent_color);
+        document.body.style.setProperty('--tg-accent-color-hover', themeParams.accent_color_hover);
+        document.body.style.setProperty('--tg-bg-color', themeParams.bg_color);
 
-        if (themeParams.text_color) {
-        document.body.style.color = themeParams.text_color;
-        }
-
-        if (themeParams.accent_color) {
-        // Используем accent_color для кнопок и других элементов интерфейса
-        }
-        
         // Handle events
-        WebApp.onEvent('invoiceClosed', function(object) {
+        window.Telegram.WebApp.onEvent('invoiceClosed', function(object) {
             if (object.status == 'paid') {
-                WebApp.close();
+                window.Telegram.WebApp.close();
             } else if (object.status == 'failed') {
-                WebApp.showAlert("Не беспокойтесь. Мы сохраним ваш выбор.");
+                window.Telegram.WebApp.showAlert("Не беспокойтесь. Мы сохраним ваш выбор.");
             }
         });
-        
-        // Validate user
-        let initDataURLSP = new URLSearchParams(WebApp.initData);
-        var hash = initDataURLSP.get('hash');
-        initDataURLSP.delete('hash');
-        initDataURLSP.sort();
-        var checkDataString = initDataURLSP.toString().replaceAll('&', '\n');
-        
-        let xhrURL = new URL('https://<your_domain>/<userIsValid>');
-        xhrURL.searchParams.set('hash', hash);
-        xhrURL.searchParams.set('checkDataString', checkDataString);
-        
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', xhrURL);
-        xhr.send();
-        xhr.onload = function() {
-            if (JSON.parse(xhr.response).result == true) {
-                WebApp.showAlert
+    </script>
+</body>
+</html>
