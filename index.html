@@ -2,11 +2,12 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">    
     <title>Telegram Web App</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/telegram-web-app-js@1.4.0/dist/telegram-web-app.min.css">
     <style>
         body {
+            overflow: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -15,16 +16,17 @@
             margin: 0;
             padding: 0;
             font-family: 'Roboto', sans-serif;
+            background-color: #f7f7f7;
         }
         h1 {
             font-size: 2rem;
             font-weight: 500;
-            color: var(--tg-text-color);
+            color: #333;
             margin-bottom: 1rem;
         }
         p {
             font-size: 1.125rem;
-            color: var(--tg-text-color);
+            color: #333;
             text-align: center;
             margin-bottom: 2rem;
         }
@@ -42,8 +44,8 @@
             width: 200px;
             height: 50px;
             border-radius: 25px;
-            background-color: var(--tg-button-color);
-            color: var(--tg-button-text-color);
+            background-color: #4CAF50;
+            color: #fff;
             font-size: 1rem;
             font-weight: 500;
             text-transform: uppercase;
@@ -52,7 +54,7 @@
             transition: background-color 0.2s ease;
         }
        .button:hover {
-            background-color: var(--tg-button-color-hover);
+            background-color: #3e8e41;
         }
     </style>
 </head>
@@ -69,21 +71,13 @@
             token: 'YOUR_TELEGRAM_WEB_APP_BOT_TOKEN',
         });
 
-        const themeParams = window.Telegram.WebApp.themeParams;
-
-        document.body.style.setProperty('--tg-theme-bg-color', themeParams.bg_color);
-        document.body.style.setProperty('--tg-theme-secondary-bg-color', themeParams.secondary_bg_color);
-        document.body.style.setProperty('--tg-theme-text-color', themeParams.text_color);
-        document.body.style.setProperty('--tg-theme-hint-color', themeParams.hint_color);
-        document.body.style.setProperty('--tg-theme-button-color', themeParams.button_color);
-        document.body.style.setProperty('--tg-theme-button-text-color', themeParams.button_text_color);
-        document.body.style.setProperty('--tg-theme-button-color-hover', themeParams.button_color_hover);
-
-        const textColor = themeParams.text_color;
-        const bgColor = themeParams.bg_color;
-        const contrast = getContrast(textColor, bgColor);
-        if (contrast < 4.5) {
-            document.body.style.setProperty('--tg-text-color', getContrastColor(textColor, bgColor));
-        }
-
-        function getContrast(color1, color2)
+        window.Telegram.WebApp.onEvent('invoiceClosed', function(object) {
+            if (object.status == 'paid') {
+                window.Telegram.WebApp.close();
+            } else if (object.status == 'failed') {
+                window.Telegram.WebApp.showAlert("Не беспокойтесь. Мы сохраним ваш выбор.");
+            }
+        });
+    </script>
+</body>
+</html>
