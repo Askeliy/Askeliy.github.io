@@ -1,15 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Заголовок документа</title>
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Web App</title>
+    <script src="https://cdn.jsdelivr.net/npm/telegram-web-app-js@1.4.0/dist/telegram-web-app.min.js"></script>
 </head>
 <body>
-  <script>
-      var WebApp = window.Telegram.WebApp;
-      WebApp.showAlert(`Добро пожаловать, @${WebApp.WebAppUser.username}.`);
-  </script>
-  <h1>Главное окно</h1>
+    <h1>Telegram Web App</h1>
+    <script>
+        var WebApp = window.Telegram.WebApp;
+        
+        // Initialize Web App
+        WebApp.initData = window.location.search;
+        
+        // Handle events
+        WebApp.onEvent('invoiceClosed', function(object) {
+            if (object.status == 'paid') {
+                WebApp.close();
+            } else if (object.status == 'failed') {
+                WebApp.showAlert("Не беспокойтесь. Мы сохраним ваш выбор.");
+            }
+        });
+        
+        // Validate user
+        let initDataURLSP = new URLSearchParams(WebApp.initData);
+        var hash = initDataURLSP.get('hash');
+        initDataURLSP.delete('hash');
+        initDataURLSP.sort();
+        var checkDataString = initDataURLSP.toString().replaceAll('&', '\n');
+        
+        let xhrURL = new URL('https://<your_domain>/<userIsValid>');
+        xhrURL.searchParams.set('hash', hash);
+        xhrURL.searchParams.set('checkDataString', checkDataString);
+        
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', xhrURL);
+        xhr.send();
+        xhr.onload = function() {
+            if (JSON.parse(xhr.response).result == true) {
+                WebApp.showAlert(`Добро пожаловать, @${WebApp.WebAppUser.username}.`);
+            } else {
+                WebApp.showAlert("Ты что, хакер?");
+                WebApp.close();
+            }
+        }
+    </script>
 </body>
 </html>
