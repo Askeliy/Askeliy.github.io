@@ -68,10 +68,8 @@
     </div>
     <script>
         var WebApp = window.Telegram.WebApp;
-        WebApp.onReady(() => {
-        WebApp.getUser().then(user => {
+        Telegram.WebApp.getUser().then(user => {
         WebApp.showAlert(`Добро пожаловать, @${user.username}.`);
-          });
         });
         
         window.Telegram.WebApp.init({
