@@ -68,7 +68,7 @@
     </div>
     <script>
         var WebApp = window.Telegram.WebApp;
-          WebApp.showAlert(`Добро пожаловать, @${WebApp.initDataUnsafe.first_name}.`);
+          WebApp.showAlert(`Добро пожаловать, @${WebApp.initDataUnsafe.user.first_name}.`);
 
         window.Telegram.WebApp.onEvent('invoiceClosed', function(object) {
             if (object.status == 'paid') {
