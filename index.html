@@ -28,13 +28,13 @@
             text-align: center;
             margin-bottom: 2rem;
         }
-        .button-container {
+       .button-container {
             display: flex;
             flex-direction: row;
             align-items: center;
             justify-content: center;
         }
-        .button {
+       .button {
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -42,8 +42,8 @@
             width: 200px;
             height: 50px;
             border-radius: 25px;
-            background-color: var(--tg-accent-color);
-            color: #ffffff;
+            background-color: var(--tg-button-color);
+            color: var(--tg-button-text-color);
             font-size: 1rem;
             font-weight: 500;
             text-transform: uppercase;
@@ -51,8 +51,19 @@
             margin: 0 0.5rem;
             transition: background-color 0.2s ease;
         }
-        .button:hover {
-            background-color: var(--tg-accent-color-hover);
+       .button:hover {
+            background-color: var(--tg-button-color-hover);
+        }
+
+        /* Add theme variables */
+        :root {
+            --tg-theme-bg-color: #f7f7f7;
+            --tg-theme-secondary-bg-color: #e5e5e5;
+            --tg-theme-text-color: #333;
+            --tg-theme-hint-color: #999;
+            --tg-theme-button-color: #4CAF50;
+            --tg-theme-button-text-color: #fff;
+            --tg-theme-button-color-hover: #3e8e41;
         }
     </style>
 </head>
@@ -76,10 +87,13 @@
         const themeParams = window.Telegram.WebApp.themeParams;
 
         // Set CSS variables
-        document.body.style.setProperty('--tg-text-color', themeParams.text_color);
-        document.body.style.setProperty('--tg-accent-color', themeParams.accent_color);
-        document.body.style.setProperty('--tg-accent-color-hover', themeParams.accent_color_hover);
-        document.body.style.setProperty('--tg-bg-color', themeParams.bg_color);
+        document.body.style.setProperty('--tg-theme-bg-color', themeParams.bg_color);
+        document.body.style.setProperty('--tg-theme-secondary-bg-color', themeParams.secondary_bg_color);
+        document.body.style.setProperty('--tg-theme-text-color', themeParams.text_color);
+        document.body.style.setProperty('--tg-theme-hint-color', themeParams.hint_color);
+        document.body.style.setProperty('--tg-theme-button-color', themeParams.button_color);
+        document.body.style.setProperty('--tg-theme-button-text-color', themeParams.button_text_color);
+        document.body.style.setProperty('--tg-theme-button-color-hover', themeParams.button_color_hover);
 
         // Handle events
         window.Telegram.WebApp.onEvent('invoiceClosed', function(object) {
