@@ -54,17 +54,6 @@
        .button:hover {
             background-color: var(--tg-button-color-hover);
         }
-
-        /* Add theme variables */
-        :root {
-            --tg-theme-bg-color: #f7f7f7;
-            --tg-theme-secondary-bg-color: #e5e5e5;
-            --tg-theme-text-color: #333;
-            --tg-theme-hint-color: #999;
-            --tg-theme-button-color: #4CAF50;
-            --tg-theme-button-text-color: #fff;
-            --tg-theme-button-color-hover: #3e8e41;
-        }
     </style>
 </head>
 <body>
@@ -75,18 +64,13 @@
         <a href="#" class="button">Написать сообщение</a>
     </div>
     <script>
-        // Initialize Telegram Web App
         window.Telegram.WebApp.init({
-            // Your Telegram Web App ID
             id: 'YOUR_TELEGRAM_WEB_APP_ID',
-            // Your Telegram Web App bot token
             token: 'YOUR_TELEGRAM_WEB_APP_BOT_TOKEN',
         });
 
-        // Get ThemeParams
         const themeParams = window.Telegram.WebApp.themeParams;
 
-        // Set CSS variables
         document.body.style.setProperty('--tg-theme-bg-color', themeParams.bg_color);
         document.body.style.setProperty('--tg-theme-secondary-bg-color', themeParams.secondary_bg_color);
         document.body.style.setProperty('--tg-theme-text-color', themeParams.text_color);
@@ -95,14 +79,11 @@
         document.body.style.setProperty('--tg-theme-button-text-color', themeParams.button_text_color);
         document.body.style.setProperty('--tg-theme-button-color-hover', themeParams.button_color_hover);
 
-        // Handle events
-        window.Telegram.WebApp.onEvent('invoiceClosed', function(object) {
-            if (object.status == 'paid') {
-                window.Telegram.WebApp.close();
-            } else if (object.status == 'failed') {
-                window.Telegram.WebApp.showAlert("Не беспокойтесь. Мы сохраним ваш выбор.");
-            }
-        });
-    </script>
-</body>
-</html>
+        const textColor = themeParams.text_color;
+        const bgColor = themeParams.bg_color;
+        const contrast = getContrast(textColor, bgColor);
+        if (contrast < 4.5) {
+            document.body.style.setProperty('--tg-text-color', getContrastColor(textColor, bgColor));
+        }
+
+        function getContrast(color1, color2)
