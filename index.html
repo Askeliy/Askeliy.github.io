@@ -69,16 +69,11 @@
     <script>
         var WebApp = window.Telegram.WebApp;
         if (WebApp.initData) {
-          const userData = WebApp.initData.user;
-          WebApp.showAlert(`Добро пожаловать.`);
+          //const userData = WebApp.initData.user;
+          WebApp.showAlert(`Добро пожаловать, @${WebApp.WebAppUser.username}.`);
         } else {
           WebApp.showAlert('Ошибка: не удалось получить информацию о пользователе.');
         }
-        
-        window.Telegram.WebApp.init({
-            id: 'YOUR_TELEGRAM_WEB_APP_ID',
-            token: 'YOUR_TELEGRAM_WEB_APP_BOT_TOKEN',
-        });
 
         window.Telegram.WebApp.onEvent('invoiceClosed', function(object) {
             if (object.status == 'paid') {
