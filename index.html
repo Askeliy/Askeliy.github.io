@@ -65,10 +65,25 @@
         <a href="#" class="button">Написать сообщение</a>
     </div>
     <script>
+        import { useThemeParams } from '@vkruglikov/react-telegram-web-app';
         var WebApp = window.Telegram.WebApp;
         
         // Initialize Web App
         WebApp.initData = window.location.search;
+
+        const themeParams = useThemeParams();
+
+        if (themeParams.bg_color) {
+        document.body.style.background = themeParams.bg_color;
+        }
+
+        if (themeParams.text_color) {
+        document.body.style.color = themeParams.text_color;
+        }
+
+        if (themeParams.accent_color) {
+        // Используем accent_color для кнопок и других элементов интерфейса
+        }
         
         // Handle events
         WebApp.onEvent('invoiceClosed', function(object) {
