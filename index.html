@@ -1,82 +1,50 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">    
-    <title>Telegram Web App</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/telegram-web-app-js@1.4.0/dist/telegram-web-app.min.css">
-    <style>
-        body {
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            padding: 0;
-            font-family: 'Roboto', sans-serif;
-            background-color: #f7f7f7;
-        }
-        h1 {
-            font-size: 2rem;
-            font-weight: 500;
-            color: #333;
-            margin-bottom: 1rem;
-        }
-        p {
-            font-size: 1.125rem;
-            color: #333;
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-       .button-container {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-        }
-       .button {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-            width: 200px;
-            height: 50px;
-            border-radius: 25px;
-            background-color: #4CAF50;
-            color: #fff;
-            font-size: 1rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            text-decoration: none;
-            margin: 0 0.5rem;
-            transition: background-color 0.2s ease;
-        }
-       .button:hover {
-            background-color: #3e8e41;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Drawing Game</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <h1>Telegram Web App</h1>
-    <p>Выберите действие:</p>
-    <div class="button-container">
-        <a href="#" class="button">Оплатить</a>
-        <a href="#" class="button">Написать сообщение</a>
-    </div>
-    <script>
-        var WebApp = window.Telegram.WebApp;
-          WebApp.showAlert(`Добро пожаловать, @${WebApp.initDataUnsafe.user.first_name}.`);
+    
+    <div id="app">
+        <nav id="navbar">
+            <button onclick="showSection('friends')">Friends</button>
+            <button onclick="showSection('gallery')">Gallery</button>
+            <button onclick="showSection('shop')">Shop</button>
+            <button onclick="showSection('profile')">Profile</button>
+        </nav>
 
-        window.Telegram.WebApp.onEvent('invoiceClosed', function(object) {
-            if (object.status == 'paid') {
-                window.Telegram.WebApp.close();
-            } else if (object.status == 'failed') {
-                window.Telegram.WebApp.showAlert("Не беспокойтесь. Мы сохраним ваш выбор.");
-            }
-        });
-    </script>
+        <div id="friends" class="section active">
+            <h1>Ваши друзья</h1>
+            <button id="add-friend-button", onclick="generateReferralLink()">Добавить друга</button>
+            <div class="friends-list">
+                <div class="container">
+                    <h2>Вам нарисовали</h2>
+                    <ul id="received-list">
+                        <!-- Список друзей, нарисовавших вам рисунок, будет заполняться через JS -->
+                    </ul>
+                </div>
+                <div class="container">
+                    <h2>Ждут рисунка</h2>
+                    <ul id="waiting-list">
+                        <!-- Список друзей, ожидающих рисунка, будет заполняться через JS -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Модальные окна для взаимодействия -->
+        <div id="modal" class="modal">
+            <div id="modal-content" class="modal-content">
+                <!-- Динамическое содержание будет добавляться через JS -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
