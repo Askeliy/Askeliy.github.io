@@ -94,6 +94,8 @@ function openDrawingCanvas(friendName) {
     function startDrawing(event) {
         drawing = true;
         ctx.beginPath();
+        document.body.scrollLeft += 1;
+        document.body.scrollLeft -= 1;
         ctx.moveTo(getX(event), getY(event));
         event.preventDefault();
     }
