@@ -94,8 +94,14 @@ function openDrawingCanvas(friendName) {
     function startDrawing(event) {
         drawing = true;
         ctx.beginPath();
-        document.body.scrollLeft += 1;
-        document.body.scrollLeft -= 1;
+        const moveEvent = new MouseEvent('mousemove', {
+    bubbles: true,
+    cancelable: true,
+    view: window,
+    clientX: event.touches[0].clientX - 1,
+    clientY: event.touches[0].clientY - 150,
+  });
+  document.elementFromPoint(event.touches[0].clientX, event.touches[0].clientY).dispatchEvent(moveEvent);
         ctx.moveTo(getX(event), getY(event));
         event.preventDefault();
     }
