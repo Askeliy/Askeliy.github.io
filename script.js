@@ -96,7 +96,6 @@ function openDrawingCanvas(friendName) {
         ctx.beginPath();
         ctx.moveTo(getX(event), getY(event));
         event.preventDefault();
-	WebApp.expand();
     }
 
     function stopDrawing(event) {
@@ -116,7 +115,6 @@ function openDrawingCanvas(friendName) {
         ctx.beginPath();
         ctx.moveTo(getX(event), getY(event));
         event.preventDefault();
-	WebApp.expand();
     }
 
     function getX(event) {
