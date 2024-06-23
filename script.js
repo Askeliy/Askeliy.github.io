@@ -2,12 +2,6 @@
 
 var WebApp = window.Telegram.WebApp;
 
-WebApp.onEvent('viewportChanged', () => {
-		if (!WebApp.isExpanded) {
-			WebApp.expand();
-		}
-	})
-
 document.addEventListener('DOMContentLoaded', () => {
     // Примеры данных друзей
     const receivedDrawings = [
@@ -129,6 +123,11 @@ function openDrawingCanvas(friendName) {
     }
 
     function getY(event) {
+	WebApp.onEvent('viewportChanged', () => {
+		if (!WebApp.isExpanded) {
+			WebApp.expand();
+		}
+	})
         if (event.touches) {
             return event.touches[0].clientY - canvas.offsetTop - 150;
         }
