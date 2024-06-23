@@ -2,6 +2,12 @@
 
 var WebApp = window.Telegram.WebApp;
 
+WebApp.onEvent('viewportChanged', () => {
+		if (!WebApp.isExpanded) {
+			WebApp.expand();
+		}
+	})
+
 document.addEventListener('DOMContentLoaded', () => {
     // Примеры данных друзей
     const receivedDrawings = [
