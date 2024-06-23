@@ -2,7 +2,7 @@
 
 var WebApp = window.Telegram.WebApp;
 
-WebApp.expand();
+WebApp.onEvent('viewportChanged', () => WebApp.expand());
 
 document.addEventListener('DOMContentLoaded', () => {
     // Примеры данных друзей
