@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Durak Game</title>
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+    <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+</head>
+<body>
+    <!--<h1>Durak Game</h1>
+    <div id="game-status"></div>
+    <div id="player-hand"></div>
+    <button id="attack-button">Attack</button>
+    <button id="defend-button">Defend</button>-->
+
+    <div id="game-table">
+        <div id="opponent-hand" class="hand">
+            <!-- Карты противника -->
+        </div>
+        <div id="center-table">
+            <!-- Игровые карты -->
+        </div>
+        <div id="deck-and-bita">
+            <div id="deck">
+                <div class="card back"></div>
+            </div>
+            <div id="bita">
+                <!-- Карты биты -->
+            </div>
+        </div>
+        <div id="player-hand" class="hand">
+            <!-- Карты игрока -->
+        </div>
+        <button id="end-turn-button">Завершить ход</button>
+        <button id="take-cards-button">Подобрать карты</button>
+        <button id="bite-button">Бита</button>
+    </div>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</body>
+</html>

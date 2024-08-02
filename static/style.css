@@ -1,0 +1,105 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: green;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+}
+
+#game-table {
+    display: grid;
+    grid-template-rows: 1fr 2fr 1fr;
+    grid-template-columns: 1fr 3fr 1fr;
+    gap: 10px;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+
+.hand {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    position: relative;
+}
+
+#player-hand {
+    grid-row: 3 / span 1;
+    grid-column: 1 / span 2;    
+    justify-content: center;
+    align-items: flex-end;
+}
+
+#opponent-hand {
+    grid-row: 1 / span 1;
+    grid-column: 2 / span 1;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+#center-table {
+    grid-row: 2 / span 1;
+    grid-column: 2 / span 1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+#deck-and-bita {
+    grid-row: 2 / span 1;
+    grid-column: 3 / span 3;
+    display: flex;
+    justify-content: space-between;
+}
+
+#deck, #bita {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+#deck {
+    position: absolute;    
+}
+
+.card {
+    width: 70px;
+    height: 100px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    cursor: pointer;
+    position: absolute;
+}
+
+.card.back {
+    background-color: gray;
+}
+
+.card.dragging {
+    opacity: 0.5;
+}
+
+#player-hand .card, #opponent-hand .card {
+    position: absolute;
+    transition: transform 0.3s ease;
+}
+
+@media (min-width: 768px) {
+    .card {
+        width: 90px;
+        height: 130px;
+        font-size: 20px;
+    }
+}
